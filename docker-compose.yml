@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+  proxy:
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
+    container_name: frontend_proxy
+    ports:
+      - 3306:3306
+    depends_on:
+      - mysql
+    links:
+      - mysql:mysql
+
+  mysql:
+    image: mariadb:5.5
+    container_name: mysql1
+    environment:
+      - MYSQL_ROOT_PASSWORD=helloWorld
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data:
